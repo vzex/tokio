@@ -6,6 +6,10 @@ cfg_rt_core! {
 
     use std::future::Future;
 }
+cfg_syscall! {
+    use std::sync::Arc;
+    use crate::syscall::Syscalls;
+}
 
 /// Handle to the runtime.
 ///
@@ -28,6 +32,10 @@ pub struct Handle {
 
     /// Blocking pool spawner
     pub(super) blocking_spawner: blocking::Spawner,
+
+    /// TODO: Document Syscalls
+    #[cfg(feature = "syscall")]
+    pub(super) syscalls: Option<Arc<Box<dyn Syscalls>>>,
 }
 
 impl Handle {

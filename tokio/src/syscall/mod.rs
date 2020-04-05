@@ -2,12 +2,11 @@
 //! for interacting with OS resources such as disks and network.
 //!
 //! ## Extension
-//! The [`Syscall`] trait allows hooking into implementations of Tokio
+//! The Syscall trait allows hooking into implementations of Tokio
 //! disk and networking resources to supply alternate implementations
 //! or mocks.
 //!
 //! [syscall]:crate::syscall
-//! [`Syscall`]:crate::syscall::Syscall
 
 cfg_udp! {
     mod udp;

@@ -5,13 +5,19 @@ use std::{
 };
 
 cfg_syscall! {
+    use crate::syscall::Syscalls;
+    use std::sync::Arc;
+    /// A representation of a UDP socket.
     #[derive(Debug, Copy, Clone)]
     pub struct UdpResource(usize);
+
+    fn syscalls() -> Arc<dyn Syscalls> {
+        crate::runtime::context::syscalls().expect("Syscalls not supplied to the Runtime")
+    }
 }
 cfg_not_syscall! {
     use crate::io::PollEvented;
-    /// UdpResource tracks a mio::net::UdpSocket, allowing callers to poll
-    /// for readiness events and read/write.
+    /// A representation of a UDP socket.
     pub type UdpResource = PollEvented<mio::net::UdpSocket>;
 }
 
@@ -19,7 +25,7 @@ impl UdpResource {
     pub(crate) fn bind_addr(addr: &net::SocketAddr) -> io::Result<Self> {
         cfg_if_syscall! {
             {
-                unimplemented!()
+                syscalls().udp_bind(addr)
             } else {
                 let sys = mio::net::UdpSocket::bind(&addr)?;
                 let io = PollEvented::new(sys)?;
@@ -106,7 +112,7 @@ impl UdpResource {
     ) -> Poll<io::Result<usize>> {
         cfg_if_syscall! {
             {
-                unimplemented!()
+                syscalls().poll_udp_send_to(&self, cx, buf, target)
             } else {
                 ready!(self.poll_write_ready(cx))?;
 

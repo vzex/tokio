@@ -40,7 +40,6 @@ impl UdpSocket {
 
     fn bind_addr(addr: SocketAddr) -> io::Result<UdpSocket> {
         let io = UdpResource::bind_addr(&addr)?;
-
         Ok(UdpSocket { io })
     }
 

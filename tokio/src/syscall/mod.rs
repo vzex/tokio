@@ -24,7 +24,7 @@ cfg_syscall! {
     pub trait Syscalls: Send + Sync + Debug {
         /// Create and return a new UdpResource, an attempt to bind it to the `addr`
         /// provided.
-        fn udp_bind(&self, addr: &net::SocketAddr) -> io::Result<UdpResource>;
+        fn udp_bind_addr(&self, addr: &net::SocketAddr) -> io::Result<UdpResource>;
 
         /// Poll send
         fn poll_udp_send_to(

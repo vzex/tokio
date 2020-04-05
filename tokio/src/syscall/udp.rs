@@ -25,7 +25,7 @@ impl UdpResource {
     pub(crate) fn bind_addr(addr: &net::SocketAddr) -> io::Result<Self> {
         cfg_if_syscall! {
             {
-                syscalls().udp_bind(addr)
+                syscalls().udp_bind_addr(addr)
             } else {
                 let sys = mio::net::UdpSocket::bind(&addr)?;
                 let io = PollEvented::new(sys)?;

@@ -52,7 +52,7 @@ cfg_syscall! {
     use crate::syscall::Syscalls;
 
     #[allow(dead_code)] // Unused for now, gated by the unstable flag
-    pub(crate) fn syscalls() -> Option<Arc<Box<dyn Syscalls>>> {
+    pub(crate) fn syscalls() -> Option<Arc<dyn Syscalls>> {
         CONTEXT.with(|ctx| match *ctx.borrow() {
             Some(ref ctx) => ctx.syscalls.clone(),
             None => None

@@ -340,7 +340,7 @@ impl Builder {
         let blocking_spawner = blocking_pool.spawner().clone();
 
         #[cfg(all(feature = "syscall", tokio_unstable))]
-        let syscalls = self.syscalls.take().map(Arc::new);
+        let syscalls = self.syscalls.take().map(Into::into);
 
         Ok(Runtime {
             kind: Kind::Shell(Shell::new(driver)),
@@ -443,7 +443,7 @@ cfg_rt_core! {
             let blocking_spawner = blocking_pool.spawner().clone();
 
             #[cfg(all(feature = "syscall", tokio_unstable))]
-            let syscalls = self.syscalls.take().map(Arc::new);
+            let syscalls = self.syscalls.take().map(Into::into);
 
             Ok(Runtime {
                 kind: Kind::Basic(scheduler),
@@ -493,7 +493,7 @@ cfg_rt_threaded! {
             let blocking_pool = blocking::create_blocking_pool(self, self.max_threads);
             let blocking_spawner = blocking_pool.spawner().clone();
             #[cfg(all(feature = "syscall", tokio_unstable))]
-            let syscalls = self.syscalls.take().map(Arc::new);
+            let syscalls = self.syscalls.take().map(Into::into);
 
             // Create the runtime handle
             let handle = Handle {

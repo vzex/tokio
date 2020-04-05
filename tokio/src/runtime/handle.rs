@@ -35,7 +35,7 @@ pub struct Handle {
 
     /// TODO: Document Syscalls
     #[cfg(all(feature = "syscall", tokio_unstable))]
-    pub(super) syscalls: Option<Arc<Box<dyn Syscalls>>>,
+    pub(super) syscalls: Option<Arc<dyn Syscalls>>,
 }
 
 impl Handle {

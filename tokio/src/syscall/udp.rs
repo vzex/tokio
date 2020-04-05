@@ -19,7 +19,6 @@ impl UdpResource {
     pub(crate) fn bind_addr(addr: &net::SocketAddr) -> io::Result<Self> {
         cfg_if_syscall! {
             {
-
                 unimplemented!()
             } else {
                 let sys = mio::net::UdpSocket::bind(&addr)?;

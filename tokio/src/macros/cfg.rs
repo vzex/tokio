@@ -339,3 +339,18 @@ macro_rules! cfg_not_syscall {
         )*
     }
 }
+
+macro_rules! cfg_if_syscall {
+    (
+            $r1:block
+        else
+            $r2:block
+    ) => {
+        #[cfg(all(feature = "syscall", tokio_unstable))]
+        #[cfg_attr(docsrs, doc(cfg(all(feature = "syscall", tokio_unstable))))]
+        $r1
+
+        #[cfg(not(all(feature = "syscall", tokio_unstable)))]
+        $r2
+    };
+}

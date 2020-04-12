@@ -347,7 +347,13 @@ cfg_time! {
     pub mod time;
 }
 
-pub mod syscall;
+cfg_syscall! {
+    pub mod syscall;
+}
+
+cfg_not_syscall! {
+    pub(crate) mod syscall;
+}
 
 mod util;
 

@@ -18,7 +18,7 @@ cfg_syscall! {
 cfg_not_syscall! {
     use crate::io::PollEvented;
     /// A representation of a UDP socket.
-    pub type UdpResource = PollEvented<mio::net::UdpSocket>;
+    pub(crate) type UdpResource = PollEvented<mio::net::UdpSocket>;
 }
 
 impl UdpResource {

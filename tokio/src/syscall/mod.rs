@@ -6,11 +6,19 @@
 //! disk and networking resources to supply alternate implementations
 //! or mocks.
 //!
+//! Extension requires compiling with `--cfg tokio_unstable` in addition
+//! to the `syscall` feature flag.
+//!
 //! [syscall]:crate::syscall
 
 cfg_udp! {
     mod udp;
-    pub use udp::UdpResource;
+    cfg_syscall! {
+        pub use udp::UdpResource;
+    }
+    cfg_not_syscall! {
+        pub(crate) use udp::UdpResource;
+    }
 }
 
 cfg_syscall! {
